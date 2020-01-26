@@ -31,4 +31,5 @@
 
 ## Steps
 
-- Make a network request to fetch soem JSON and print the result
+- Make a network request to fetch some JSON and print the result
+  - How Typescript handles errors
