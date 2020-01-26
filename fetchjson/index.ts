@@ -22,7 +22,7 @@ axios.get(url).then(response => {
   const title = todo.title;
   const completed = todo.completed;
 
-  logTodo(id, completed, title);
+  logTodo(id, title, completed);
 });
 
 const logTodo = (id: number, title: string, completed: boolean) => {
