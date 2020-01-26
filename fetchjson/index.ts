@@ -17,14 +17,18 @@ axios.get(url).then(response => {
 
   const todo = response.data as Todo;
 
-  // So the bug was that we wrote wrong property declarations
-  const ID = todo.ID;
-  const title = todo.Title;
-  const finished = todo.finished;
+  // So the bug was that we wrote wrong property declarations which are now fixed
+  const id = todo.id;
+  const title = todo.title;
+  const completed = todo.completed;
 
-  console.log(`
-    The Todo wiht ID: ${ID}
-    Has a title of: ${title}
-    Is it finished? ${finished}
-  `);
+  logTodo(id, completed, title);
 });
+
+const logTodo = (id: number, title: string, completed: boolean) => {
+  console.log(`
+      The Todo with ID: ${id}
+      Has a title of: ${title}
+      Is it completed? ${completed}
+    `);
+};
