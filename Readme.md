@@ -89,9 +89,8 @@ Type - Easy way to refer to the different properties + functions that a value ha
 
 - These are used differently for `variables`, `functions`,  `objects`
 
- Type Annotations - Code we add to tell ts what type of value a variable will refer to
-
- Type inference - Typescript tries to figure out what type of value a variable refers to based on how the variable was initialized.
+> ***Type Annotations*** - Code we add to tell ts what type of value a variable will refer to \
+> ***Type inference*** - Typescript tries to figure out what type of value a variable refers to based on how the variable was initialized.
 
 #### Variables
 
@@ -113,12 +112,30 @@ let colors: string[] = ["red", "green"];
 
 #### Functions
 
+> Only inferences return value \
+> NO TYPE INFERENCE FOR ARGUMENTS hence Always add annotations for arguments
+
+```Javascript
+/**
+ * NO TYPE INFERENCE FOR ARGUMENTS hence Always add annotations for arguments
+ * @param a :number
+ * @param b :number
+ *
+ * TYPE INFERENCE ONLY ON RETURN
+ */
+const add = (a: number, b: number): number => {
+  return a + b;
+};
+```
+
 ```Javascript
 // In the annotation - what input we send to the function and what output is returned
 const logNumber: (i: number) => void = (i: number) => {
   console.log(i);
 };
 ```
+
+
 
 #### Objects
 
