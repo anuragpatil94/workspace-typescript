@@ -2,6 +2,20 @@
 
 > Typescript = Javascript + **_A Type System_**
 
+## Table of Contents
+
+- [Typescript](#typescript)
+  - [Table of Contents](#table-of-contents)
+  - [Type System](#type-system)
+    - [Advantages](#advantages)
+  - [Packages](#packages)
+  - [Commands](#commands)
+    - [Run Typescript](#run-typescript)
+  - [Steps](#steps)
+  - [Goals](#goals)
+    - [Syntax + Features](#syntax--features)
+    - [Design Patterns with TS](#design-patterns-with-ts)
+
 ## Type System
 
 ### Advantages
@@ -11,7 +25,7 @@
 - Only active during development
 - ❌Doesn't provide any performance optimization
 
-## packages
+## Packages
 
 - typescript
 - ts-node
@@ -31,5 +45,23 @@
 
 ## Steps
 
-- Make a network request to fetch some JSON and print the result
-  - How Typescript handles errors
+1. Make a network request to fetch some JSON and print the result
+   How Typescript handles errors
+
+## Goals
+
+### Syntax + Features
+  
+- Understand basic types in TS
+- Function typing + annotations
+- Type definition files
+- Arrays in TS
+- Modules Systems
+- Classes + Refresher on OOP
+- What is an interface?
+- What is the syntax for defining an interface?
+
+### Design Patterns with TS
+  
+- Projects
+- How do we use interfaces to write reusable code?
