@@ -23,6 +23,8 @@
       - [Functions](#functions)
       - [Objects](#objects)
       - [When to use Type Annotations](#when-to-use-type-annotations)
+    - [Typed Arrays](#typed-arrays)
+    - [Tuples](#tuples)
   - [Packages](#packages)
 
 ## Goals
@@ -257,6 +259,67 @@ numberss.forEach(element => {
     numberssAboveZero = element;
   }
 });
+```
+
+### Typed Arrays
+
+```Javascript
+  //We don't need to write annotations since if the array has data it inferences the type
+  const carMakers: string[] = ["ford", "toyota", "chevy"];
+  const dates = [new Date(), new Date()];
+  const carsByMake: string[][] = [["f150"], ["corolla"], ["camaro"]];
+
+  // We need only when the array is empty
+  const numbersList: number[] = [];
+```
+
+- TS can do type inference when extracting values from an array
+- TS can prevent us from adding incompatible values to the array
+- We can ge help with `map`, `forEach`, `reduce` functions
+- Flexible - arrays can still contain multiple different types
+
+```Javascript
+  // Help with Inference when extracting values
+  // Hover over car to check inference
+  const car = carMakers[0];
+  const date = dates[0];
+
+  // prevent adding incompatible values
+  // carMakers.push(100);
+
+  // Help with 'map'
+  carMakers.map((car: string): string => {
+    return car.toUpperCase();
+  });
+
+  // Flexible Types in array
+  const importantDates = [new Date(), "2020-28-01"];
+  const importantDatess: (Date | string)[] = [new Date()];
+  importantDatess.push("2020");
+  // importantDatess.push(2020);
+```
+
+### Tuples
+
+- Array-like structure where each element represents some property of a record
+
+```Javascript
+  const drink = {
+    color: "brown",
+    carbonated: true,
+    sugar: 40
+  };
+
+  // Still Array
+  // const pepsi = ["black", true, 40];
+
+  // This annotation turns array to tuple
+  const pepsi: [string, boolean, number] = ["black", true, 40];
+
+  // Type Alias
+  type Drink = [string, boolean, number];
+  const sprite: Drink = ["clear", true, 40];
+
 ```
 
 ## Packages
