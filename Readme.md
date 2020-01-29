@@ -27,6 +27,7 @@
     - [Tuples](#tuples)
     - [Interface](#interface)
     - [Class](#class)
+  - [(Project) Maps](#project-maps)
   - [Packages](#packages)
 
 ## Goals
@@ -57,6 +58,8 @@
 ## Commands
 
 - `tsc -v` -> Typescirpt Compiler
+- `tsc-node <filename>.ts` -> build and run at same time in cmd
+- `parcel <filename>.ts` -> This will build the html index file connecting whole project will run on a server.
 
 ### Run Typescript
 
@@ -91,10 +94,10 @@ Type - Easy way to refer to the different properties + functions that a value ha
 
 ### Type Annotations + Type Inference
 
-- These are used differently for `variables`, `functions`,  `objects`
+- These are used differently for `variables`, `functions`, `objects`
 
-> ***Type Annotations*** - Code we add to tell ts what type of value a variable will refer to \
-> ***Type inference*** - Typescript tries to figure out what type of value a variable refers to based on how the variable was initialized.
+> **_Type Annotations_** - Code we add to tell ts what type of value a variable will refer to \
+> **_Type inference_** - Typescript tries to figure out what type of value a variable refers to based on how the variable was initialized.
 
 #### Variables
 
@@ -138,7 +141,6 @@ function divide(a: number, b: number): number {
 const multiphy = function(a: number, b: number): number {
   return a * b;
 };
-
 
 /**
  * All 3 statements return void
@@ -248,7 +250,7 @@ words.forEach(word => {
   if (word == "green") {
     foundWord = true;
   }
-})
+});
 
 // 3) When Variable cannot be inferred correctly
 let numberss = [-10, -1, 12];
@@ -266,13 +268,13 @@ numberss.forEach(element => {
 ### Typed Arrays
 
 ```typescript
-  //We don't need to write annotations since if the array has data it inferences the type
-  const carMakers: string[] = ["ford", "toyota", "chevy"];
-  const dates = [new Date(), new Date()];
-  const carsByMake: string[][] = [["f150"], ["corolla"], ["camaro"]];
+//We don't need to write annotations since if the array has data it inferences the type
+const carMakers: string[] = ["ford", "toyota", "chevy"];
+const dates = [new Date(), new Date()];
+const carsByMake: string[][] = [["f150"], ["corolla"], ["camaro"]];
 
-  // We need only when the array is empty
-  const numbersList: number[] = [];
+// We need only when the array is empty
+const numbersList: number[] = [];
 ```
 
 - TS can do type inference when extracting values from an array
@@ -281,24 +283,24 @@ numberss.forEach(element => {
 - Flexible - arrays can still contain multiple different types
 
 ```typescript
-  // Help with Inference when extracting values
-  // Hover over car to check inference
-  const car = carMakers[0];
-  const date = dates[0];
+// Help with Inference when extracting values
+// Hover over car to check inference
+const car = carMakers[0];
+const date = dates[0];
 
-  // prevent adding incompatible values
-  // carMakers.push(100);
+// prevent adding incompatible values
+// carMakers.push(100);
 
-  // Help with 'map'
-  carMakers.map((car: string): string => {
-    return car.toUpperCase();
-  });
+// Help with 'map'
+carMakers.map((car: string): string => {
+  return car.toUpperCase();
+});
 
-  // Flexible Types in array
-  const importantDates = [new Date(), "2020-28-01"];
-  const importantDatess: (Date | string)[] = [new Date()];
-  importantDatess.push("2020");
-  // importantDatess.push(2020);
+// Flexible Types in array
+const importantDates = [new Date(), "2020-28-01"];
+const importantDatess: (Date | string)[] = [new Date()];
+importantDatess.push("2020");
+// importantDatess.push(2020);
 ```
 
 ### Tuples
@@ -306,22 +308,21 @@ numberss.forEach(element => {
 - Array-like structure where each element represents some property of a record
 
 ```typescript
-  const drink = {
-    color: "brown",
-    carbonated: true,
-    sugar: 40
-  };
+const drink = {
+  color: "brown",
+  carbonated: true,
+  sugar: 40
+};
 
-  // Still Array
-  // const pepsi = ["black", true, 40];
+// Still Array
+// const pepsi = ["black", true, 40];
 
-  // This annotation turns array to tuple
-  const pepsi: [string, boolean, number] = ["black", true, 40];
+// This annotation turns array to tuple
+const pepsi: [string, boolean, number] = ["black", true, 40];
 
-  // Type Alias
-  type Drink = [string, boolean, number];
-  const sprite: Drink = ["clear", true, 40];
-
+// Type Alias
+type Drink = [string, boolean, number];
+const sprite: Drink = ["clear", true, 40];
 ```
 
 ### Interface
@@ -386,7 +387,10 @@ car.drive();
 car.honk();
 ```
 
+## (Project) Maps
+
 ## Packages
 
-- typescript
-- ts-node   - To build and run with single command
+- `typescript`
+- `ts-node` - To build and run with single command
+- `parcel-bundler` - This package will allow to run typescript code easily on browser
