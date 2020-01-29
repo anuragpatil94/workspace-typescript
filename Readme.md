@@ -25,6 +25,7 @@
       - [When to use Type Annotations](#when-to-use-type-annotations)
     - [Typed Arrays](#typed-arrays)
     - [Tuples](#tuples)
+    - [Interface](#interface)
   - [Packages](#packages)
 
 ## Goals
@@ -96,7 +97,7 @@ Type - Easy way to refer to the different properties + functions that a value ha
 
 #### Variables
 
-```JavaScript
+```typescript
 let apples: number = 5;
 
 // Error if something else than the annotated type
@@ -117,7 +118,7 @@ let colors: string[] = ["red", "green"];
 > Only inferences return value \
 > NO TYPE INFERENCE FOR ARGUMENTS hence Always add annotations for arguments
 
-```Javascript
+```typescript
 /**
  * NO TYPE INFERENCE FOR ARGUMENTS hence Always add annotations for arguments
  * @param a :number
@@ -185,7 +186,7 @@ const logWeather2016 = ({
 };
 ```
 
-```Javascript
+```typescript
 // In the annotation - what input we send to the function and what output is returned
 const logNumber: (i: number) => void = (i: number) => {
   console.log(i);
@@ -194,7 +195,7 @@ const logNumber: (i: number) => void = (i: number) => {
 
 #### Objects
 
-```Javascript
+```typescript
 const profile = {
   name: "alex",
   age: 20,
@@ -230,7 +231,7 @@ let point: { x: number; y: number } = {
 - When a function returns the `any` type and we need to clarify the value
   - Avoid `any` at all cost
 
-```Javascript
+```typescript
 // When to use annotations
 // 1) Function that returns the 'any' type
 const json = '{"x":10, "y":20}';
@@ -263,7 +264,7 @@ numberss.forEach(element => {
 
 ### Typed Arrays
 
-```Javascript
+```typescript
   //We don't need to write annotations since if the array has data it inferences the type
   const carMakers: string[] = ["ford", "toyota", "chevy"];
   const dates = [new Date(), new Date()];
@@ -278,7 +279,7 @@ numberss.forEach(element => {
 - We can ge help with `map`, `forEach`, `reduce` functions
 - Flexible - arrays can still contain multiple different types
 
-```Javascript
+```typescript
   // Help with Inference when extracting values
   // Hover over car to check inference
   const car = carMakers[0];
@@ -303,7 +304,7 @@ numberss.forEach(element => {
 
 - Array-like structure where each element represents some property of a record
 
-```Javascript
+```typescript
   const drink = {
     color: "brown",
     carbonated: true,
@@ -322,7 +323,39 @@ numberss.forEach(element => {
 
 ```
 
+### Interface
+
+> Creates a new type, describing the property names and value types of an object
+
+`Interface` + `Classes` -> Strong reusable code
+
+```Typescript
+
+interface Vehicle {
+  name: string;
+  year: number;
+  broken: boolean;
+}
+
+const printVehiclee = (vehicle: Vehicle): void => {
+  console.log("Name: ", vehicle.name);
+  console.log("Year: ", vehicle.year);
+  console.log("Broken: ", vehicle.broken);
+};
+
+printVehiclee(oldCivic);
+
+// Another Example
+interface Vehicle {
+  name: string;
+  year: number;
+  broken: boolean;
+  summary(): string; //has a Function
+}
+
+```
+
 ## Packages
 
 - typescript
-- ts-node
+- ts-node   - To build and run with single command
