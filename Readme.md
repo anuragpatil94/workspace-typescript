@@ -26,6 +26,7 @@
     - [Typed Arrays](#typed-arrays)
     - [Tuples](#tuples)
     - [Interface](#interface)
+    - [Class](#class)
   - [Packages](#packages)
 
 ## Goals
@@ -353,6 +354,36 @@ interface Vehicle {
   summary(): string; //has a Function
 }
 
+```
+
+### Class
+
+> Blueprint to create an object with some fields and methods to represent a 'thing'
+
+```typescript
+class Vehicle {
+  drive(): void {
+    console.log("Vroom Vroom");
+  }
+
+  honk(): void {
+    console.log("Peep!");
+  }
+}
+
+class Car extends Vehicle {
+  drive(): void {
+    console.log("Boom Boom");
+  }
+}
+
+const vehicle = new Vehicle();
+vehicle.drive();
+vehicle.honk();
+
+const car = new Car();
+car.drive();
+car.honk();
 ```
 
 ## Packages
