@@ -24,6 +24,7 @@
       - [Objects](#objects)
       - [When to use Type Annotations](#when-to-use-type-annotations)
     - [Typed Arrays](#typed-arrays)
+    - [Tuples](#tuples)
   - [Packages](#packages)
 
 ## Goals
@@ -270,9 +271,6 @@ numberss.forEach(element => {
 
   // We need only when the array is empty
   const numbersList: number[] = [];
-
-
-
 ```
 
 - TS can do type inference when extracting values from an array
@@ -299,6 +297,29 @@ numberss.forEach(element => {
   const importantDatess: (Date | string)[] = [new Date()];
   importantDatess.push("2020");
   // importantDatess.push(2020);
+```
+
+### Tuples
+
+- Array-like structure where each element represents some property of a record
+
+```Javascript
+  const drink = {
+    color: "brown",
+    carbonated: true,
+    sugar: 40
+  };
+
+  // Still Array
+  // const pepsi = ["black", true, 40];
+
+  // This annotation turns array to tuple
+  const pepsi: [string, boolean, number] = ["black", true, 40];
+
+  // Type Alias
+  type Drink = [string, boolean, number];
+  const sprite: Drink = ["clear", true, 40];
+
 ```
 
 ## Packages
