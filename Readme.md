@@ -389,8 +389,26 @@ car.honk();
 
 ## (Project) Maps
 
+- `Type Definition File` to connect typescript and javascript
+
+- But some modules doesn't come with type declaration files.
+  - You will know this based on an error which is shown when the package is imported.
+  
+  ```text
+    WARNING TEXT
+    - 'faker' is declared but its value is never read.ts(6133)
+    - Could not find a declaration file for module 'faker'. '.../node_modules/faker/index.js' implicitly has an 'any' type.
+    - Try `npm install @types/faker` if it exists or add a new declaration (.d.ts) file containing `declare module 'faker';`ts(7016)
+  ```
+
+- For example faker doesn't have type declaration file in its package
+- In such cases we use @types package for the package. example `@types/{library name}` 
+- `@types/faker`
+
 ## Packages
 
 - `typescript`
 - `ts-node` - To build and run with single command
 - `parcel-bundler` - This package will allow to run typescript code easily on browser
+- `faker` - To generate fake data
+  
