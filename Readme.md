@@ -402,7 +402,7 @@ car.honk();
   ```
 
 - For example faker doesn't have type declaration file in its package
-- In such cases we use @types package for the package. example `@types/{library name}` 
+- In such cases we use @types package for the package. example `@types/{library name}`
 - `@types/faker`
 
 ## Packages
