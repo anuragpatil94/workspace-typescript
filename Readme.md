@@ -28,6 +28,9 @@
     - [Interface](#interface)
     - [Class](#class)
   - [(Project) Maps](#project-maps)
+  - [(Project) Sort](#project-sort)
+    - [Typescript Compiler Configuration](#typescript-compiler-configuration)
+      - [Automate Compiling and Execution](#automate-compiling-and-execution)
   - [Packages](#packages)
 
 ## Goals
@@ -60,6 +63,9 @@
 - `tsc -v` -> Typescirpt Compiler
 - `tsc-node <filename>.ts` -> build and run at same time in cmd
 - `parcel <filename>.ts` -> This will build the html index file connecting whole project will run on a server.
+- `tsc --init` -> To create TS Config file.
+- `tsc` -> Once TS Config file is set up we can run `tsc` to build whole src files.
+- `tsc -w` -> If an changes made we can run this command to rebuild but it will only look for changes instead of build whole project again
 
 ### Run Typescript
 
@@ -405,10 +411,38 @@ car.honk();
 - In such cases we use @types package for the package. example `@types/{library name}`
 - `@types/faker`
 
+## (Project) Sort
+
+### Typescript Compiler Configuration
+
+- To make sure that the .js file which is created on compiling .ts file goes to the correct folder like `build`, we have to create a file called tsconfig.json we run `tsc --config` command
+- To do this,
+  - we find 2 properties in the `tsconfig.json` file. `outDir` for build files and `rootDir` for Source files
+    - `tsc --init` -> To create TS Config file.
+    - `tsc` -> Once TS Config file is set up we can run `tsc` to build whole src files.
+    - `tsc -w` -> If an changes made we can run this command to rebuild but it will only look for changes instead of build whole project again.
+    - run using `node build/index.js`
+
+#### Automate Compiling and Execution
+
+- Use `Concurrently` to run multiple scripts 1) compile ts using `tsc -w` and 2) `nodemon` to run node everytime.
+
+```json
+//package.json file
+
+  "scripts": {
+    "start:build": "tsc -w",
+    "start:run": "nodemon build/index.js",
+    "start": "concurrently npm:start:*"
+  }
+```
+
 ## Packages
 
 - `typescript`
 - `ts-node` - To build and run with single command
 - `parcel-bundler` - This package will allow to run typescript code easily on browser
 - `faker` - To generate fake data
+- `nodemon` - Rerun node anytime changes are detected
+- `concurrently` - Run multiple script at the same time
   
