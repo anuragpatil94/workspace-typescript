@@ -4,12 +4,11 @@
 //         this.data = data
 //     }
 // }
+// The name doesn't need to match between interface and class params
 export class NumberCollection {
-  constructor(public data: number[]) {
-    this.data = data;
-  }
+  constructor(public data: number[]) {}
 
-  // This when called is not considered as a function
+  // `get` makes sure length() is not considered as a function
   get length(): number {
     return this.data.length;
   }
