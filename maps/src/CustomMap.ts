@@ -16,24 +16,25 @@ export class CustomMap {
     );
   }
 
-  addUserMarker(user: User): void {
+  //   1st Solution - BAD Approach - but the limitation is only the common properties can be used in this.
+  addMarker(mappable: User | Company): void {
     new google.maps.Marker({
       map: this.googleMap,
       position: {
-        lat: user.location.lat,
-        lng: user.location.lng
+        lat: mappable.location.lat,
+        lng: mappable.location.lng
       },
-      label: user.name
+    //   label: mappable.name
     });
   }
-  addCompanyMarker(company: Company): void {
-    new google.maps.Marker({
-      map: this.googleMap,
-      position: {
-        lat: company.location.lat,
-        lng: company.location.lng
-      },
-      label: company.companyName
-    });
-  }
+  //   addCompanyMarker(company: Company): void {
+  //     new google.maps.Marker({
+  //       map: this.googleMap,
+  //       position: {
+  //         lat: company.location.lat,
+  //         lng: company.location.lng
+  //       },
+  //       label: company.companyName
+  //     });
+  //   }
 }
