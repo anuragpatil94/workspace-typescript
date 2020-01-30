@@ -3,5 +3,9 @@
     "@types/faker": "^4.1.9",
     "faker": "^4.1.0",
     "typescript": "^3.7.5"
+  },
+  "dependencies": {
+    "@types/googlemaps": "^3.39.2",
+    "axios": "^0.19.2"
   }
 }
