@@ -31,6 +31,7 @@
   - [(Project) Sort](#project-sort)
     - [Typescript Compiler Configuration](#typescript-compiler-configuration)
       - [Automate Compiling and Execution](#automate-compiling-and-execution)
+    - [Type Guard](#type-guard)
   - [Packages](#packages)
 
 ## Goals
@@ -436,6 +437,10 @@ car.honk();
     "start": "concurrently npm:start:*"
   }
 ```
+
+### Type Guard
+
+- `this.collection instanceof Array`
 
 ## Packages
 
