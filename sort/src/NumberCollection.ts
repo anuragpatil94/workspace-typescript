@@ -1,3 +1,5 @@
+import { Sorter } from "./Sorter";
+
 // export class NumbersCollection{
 //     data: number[];
 //     constructor(data:number[]){
@@ -5,8 +7,10 @@
 //     }
 // }
 // The name doesn't need to match between interface and class params
-export class NumberCollection {
-  constructor(public data: number[]) {}
+export class NumberCollection extends Sorter {
+  constructor(public data: number[]) {
+    super();
+  }
 
   // `get` makes sure length() is not considered as a function
   get length(): number {

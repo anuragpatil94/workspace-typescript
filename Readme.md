@@ -414,6 +414,9 @@ car.honk();
 
 ## (Project) Sort
 
+- In this application we are making a sorting algorithm such that we can take number, string or linked list to sort.
+- We will be focusing on interface and class such  that we reuse the code
+
 ### Typescript Compiler Configuration
 
 - To make sure that the .js file which is created on compiling .ts file goes to the correct folder like `build`, we have to create a file called tsconfig.json we run `tsc --config` command
