@@ -103,3 +103,35 @@ printAnything<string>(["a", "b"]);
 printAnything(["a", "b"]);
 // Error
 // printAnything<number>(['a','b'])
+
+// ------------------------------------------------------------------------------------------------------------------
+// Generic Constraints
+
+class Car {
+  print() {
+    console.log("CAR");
+  }
+}
+
+class House {
+  print() {
+    console.log("HOUSE");
+  }
+}
+
+interface Printable {
+  print(): void;
+}
+
+//Constraint will make sure that we will have a print method for type T.
+// This is called adding a constraint
+function printHousesAndCar<T extends Printable>(arr: T[]): void {
+  for (let i = 0; i < arr.length; i++) {
+    // It says that type t has no gaurantee that there will be print method
+    arr[i].print();
+  }
+}
+
+// Gives error because numbers don't have print method defined in Printable constraint
+// printHousesAndCar([1, 2, 3]);
+printHousesAndCar([new House(), new Car()]);
