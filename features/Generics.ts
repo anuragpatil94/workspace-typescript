@@ -47,3 +47,91 @@ const holdAnythingDate = new HoldAnything<Date>();
 // Error
 // holdAnythingDate.data = "2018/12/03";
 holdAnythingDate.data = new Date();
+
+// ------------------------------------------------------------------------------------------------------------------
+
+class ArrayOfNumbers {
+  constructor(public collection: number[]) {}
+
+  get(index: number): number {
+    return this.collection[index];
+  }
+}
+
+class ArrayOfStrings {
+  constructor(public collection: string) {}
+  get(index: number): string {
+    return this.collection[index];
+  }
+}
+
+class ArrayOfAnything<T> {
+  constructor(public collection: T[]) {}
+  get(index: number): T {
+    return this.collection[index];
+  }
+}
+
+new ArrayOfAnything<string>(["a", "b"]);
+
+// Uses type inference to make generic type = string
+const arr = new ArrayOfAnything(["a", "b"]);
+
+// ------------------------------------------------------------------------------------------------------------------
+// Function Generics
+
+function printStrings(arr: string[]): void {
+  for (let i = 0; i < arr.length; i++) {
+    console.log(arr[i]);
+  }
+}
+
+function printNumbers(arr: number[]): void {
+  for (let i = 0; i < arr.length; i++) {
+    console.log(arr[i]);
+  }
+}
+
+function printAnything<T>(arr: T[]): void {
+  for (let i = 0; i < arr.length; i++) {
+    console.log(arr[i]);
+  }
+}
+
+printAnything<string>(["a", "b"]);
+// Type Inference
+printAnything(["a", "b"]);
+// Error
+// printAnything<number>(['a','b'])
+
+// ------------------------------------------------------------------------------------------------------------------
+// Generic Constraints
+
+class Car {
+  print() {
+    console.log("CAR");
+  }
+}
+
+class House {
+  print() {
+    console.log("HOUSE");
+  }
+}
+
+interface Printable {
+  print(): void;
+}
+
+//Constraint will make sure that we will have a print method for type T.
+// This is called adding a constraint
+function printHousesAndCar<T extends Printable>(arr: T[]): void {
+  for (let i = 0; i < arr.length; i++) {
+    // It says that type t has no gaurantee that there will be print method
+    arr[i].print();
+  }
+}
+
+// Gives error because numbers don't have print method defined in Printable constraint
+// printHousesAndCar([1, 2, 3]);
+printHousesAndCar([new House(), new Car()]);
