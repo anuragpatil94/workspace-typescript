@@ -458,6 +458,11 @@ car.honk();
 ## (Project) Football Stats
 
 - CSV -> Load -> Parse -> ANalyze -> Report
+- Topics Covered
+  - `enum`
+  - `generics`
+  - `abstract class`
+  - `composition`
 
 ### ENUM
 
