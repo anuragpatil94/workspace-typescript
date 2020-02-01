@@ -1,4 +1,3 @@
-import { MatchResult } from "./MatchResult";
 import { MatchReader } from "./MatchReader";
 import { CSVFileReader } from "./CSVFileReader";
 import { Summary } from "./Summary";
@@ -10,10 +9,19 @@ import { HTMLReport } from "./reports/HTMLReport";
 const reader = new MatchReader(new CSVFileReader("football.csv"));
 reader.load();
 
-// const summary = new Summary(
-//   new WinsAnalysis("Man United"),
-//   new ConsoleReport()
-// );
-const summary = new Summary(new WinsAnalysis("Bournemouth"), new HTMLReport());
+const summary0 = new Summary(
+  new WinsAnalysis("Man United"),
+  new ConsoleReport()
+);
+summary0.builtAndPrintReport(reader.matches);
+var team = "Bournemouth";
+const summary1 = new Summary(
+  new WinsAnalysis(team),
+  new HTMLReport(`${team}.html`)
+);
+summary1.builtAndPrintReport(reader.matches);
 
-summary.builtAndPrintReport(reader.matches);
+// calling static method instead
+var team = "Arsenal";
+const summary2 = Summary.winsAnalysisHTMLReport(team);
+summary2.builtAndPrintReport(reader.matches);
