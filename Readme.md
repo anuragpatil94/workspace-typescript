@@ -36,6 +36,7 @@
     - [ENUM](#enum)
       - [When to use ENUM](#when-to-use-enum)
     - [Type Assertion](#type-assertion)
+      - [Converting to TUPLE](#converting-to-tuple)
   - [Packages](#packages)
 
 ## Goals
@@ -475,7 +476,7 @@ enum MatchResult {
 
 ### Type Assertion
 
-```ts 
+```ts
 return [
   dateStringToDate(row[0]),
   row[1],
@@ -485,6 +486,41 @@ return [
   row[5] as MatchResult                  // default behavior was that row[5] was a string. This is Type Assertion where we are trying to override Typescript's default behavior
 ];
 
+// Instead of array since the index of each property won't change we will use TUPLE
+```
+
+#### Converting to TUPLE
+
+```ts
+// New Tuple
+type MatchData = [Date, string, string, number, number, MatchResult, string];
+
+export class CSVFileReader {
+  data: MatchData[] = [];                               // Changes Here
+  constructor(public filename: string) {}
+  read(): void {
+    this.data = fs
+      .readFileSync(this.filename, {
+        encoding: "utf-8"
+      })
+      .trim()
+      .split("\n")
+      .map((row: string): string[] => row.split(","))
+      .map(
+        (row: string[]): MatchData => {                              // Changes Here
+          return [
+            dateStringToDate(row[0]),
+            row[1],
+            row[2],
+            parseInt(row[3]),
+            parseInt(row[4]),
+            row[5] as MatchResult,
+            row[6]
+          ];
+        }
+      );
+  }
+}
 ```
 
 ## Packages
