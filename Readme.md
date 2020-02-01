@@ -32,6 +32,7 @@
     - [Typescript Compiler Configuration](#typescript-compiler-configuration)
       - [Automate Compiling and Execution](#automate-compiling-and-execution)
     - [Type Guard](#type-guard)
+  - [(Project) Football Stats](#project-football-stats)
   - [Packages](#packages)
 
 ## Goals
@@ -444,6 +445,10 @@ car.honk();
 ### Type Guard
 
 - `this.collection instanceof Array`
+
+## (Project) Football Stats
+
+- CSV -> Load -> Parse -> ANalyze -> Report
 
 ## Packages
 
