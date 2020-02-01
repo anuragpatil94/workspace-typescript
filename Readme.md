@@ -596,6 +596,8 @@ const holdAnythingDate = new HoldAnything<Date>();
 holdAnythingDate.data = new Date();
 ```
 
+- By Covention Generic Type has a very small name so. instead of `<TypeOfData>` it will be `<T>`
+
 ## Packages
 
 - `typescript`

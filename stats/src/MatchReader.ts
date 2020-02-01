@@ -2,9 +2,11 @@ import { CSVFileReader } from "./CSVFileReader";
 import { dateStringToDate } from "./utils";
 import { MatchResult } from "./MatchResult";
 
-class MatchReader extends CSVFileReader {
-  constructor() {
-    super();
+// New Tuple
+type MatchData = [Date, string, string, number, number, MatchResult, string];
+export class MatchReader extends CSVFileReader<MatchData> {
+  constructor(public filename: string) {
+    super(filename);
   }
 
   mapRow(row: string[]): MatchData {
