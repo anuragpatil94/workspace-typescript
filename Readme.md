@@ -42,6 +42,7 @@
       - [Refactor #3](#refactor-3)
     - [Retrospective (Interface or Abstract Class)](#retrospective-interface-or-abstract-class)
     - [Generics](#generics)
+      - [Class Generics](#class-generics)
   - [Packages](#packages)
 
 ## Goals
@@ -559,6 +560,8 @@ export class CSVFileReader {
 - Allows us to define the type of a propery/argument/return value at a future point
 - Used for reusability
 
+#### Class Generics
+
 ```ts
 // Noting to do with generics
 
@@ -612,6 +615,21 @@ holdAnythingDate.data = new Date();
 ```
 
 - By Covention Generic Type has a very small name so. instead of `<TypeOfData>` it will be `<T>`
+
+```ts
+// Initial Example
+class ArrayOfAnything<T> {
+  constructor(public collection: T[]) {}
+  get(index: number): T {
+    return this.collection[index];
+  }
+}
+
+new ArrayOfAnything<string>(["a", "b"]);
+
+// Uses type inference to make generic type = string because it checks array of strings
+const arr = new ArrayOfAnything(["a", "b"]);
+```
 
 ## Packages
 

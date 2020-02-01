@@ -73,3 +73,6 @@ class ArrayOfAnything<T> {
 }
 
 new ArrayOfAnything<string>(["a", "b"]);
+
+// Uses type inference to make generic type = string
+const arr = new ArrayOfAnything(["a", "b"]);
