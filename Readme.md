@@ -35,6 +35,7 @@
   - [(Project) Football Stats](#project-football-stats)
     - [ENUM](#enum)
       - [When to use ENUM](#when-to-use-enum)
+    - [Type Assertion](#type-assertion)
   - [Packages](#packages)
 
 ## Goals
@@ -471,6 +472,20 @@ enum MatchResult {
 - Creates an object with the same keys and values when converted from TS to JS
 - Primary goal is to signal to other engineers that these are all closely related values
 - Use whenever we have a small fixed set of values that are all closely related and known at compile time
+
+### Type Assertion
+
+```ts 
+return [
+  dateStringToDate(row[0]),
+  row[1],
+  row[2],
+  parseInt(row[3]),
+  parseInt(row[4]),
+  row[5] as MatchResult                  // default behavior was that row[5] was a string. This is Type Assertion where we are trying to override Typescript's default behavior
+];
+
+```
 
 ## Packages
 
