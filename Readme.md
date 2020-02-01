@@ -42,6 +42,9 @@
       - [Refactor #3](#refactor-3)
     - [Retrospective (Interface or Abstract Class)](#retrospective-interface-or-abstract-class)
     - [Generics](#generics)
+      - [Class Generics](#class-generics)
+      - [Function Generics](#function-generics)
+      - [Generic Constraints](#generic-constraints)
   - [Packages](#packages)
 
 ## Goals
@@ -559,6 +562,8 @@ export class CSVFileReader {
 - Allows us to define the type of a propery/argument/return value at a future point
 - Used for reusability
 
+#### Class Generics
+
 ```ts
 // Noting to do with generics
 
@@ -612,6 +617,70 @@ holdAnythingDate.data = new Date();
 ```
 
 - By Covention Generic Type has a very small name so. instead of `<TypeOfData>` it will be `<T>`
+
+```ts
+// Initial Example
+class ArrayOfAnything<T> {
+  constructor(public collection: T[]) {}
+  get(index: number): T {
+    return this.collection[index];
+  }
+}
+
+new ArrayOfAnything<string>(["a", "b"]);
+
+// Uses type inference to make generic type = string because it checks array of strings
+const arr = new ArrayOfAnything(["a", "b"]);
+```
+
+#### Function Generics
+
+```ts
+function printAnything<T>(arr: T[]): void {
+  for (let i = 0; i < arr.length; i++) {
+    console.log(arr[i]);
+  }
+}
+
+printAnything<string>(["a", "b"]);
+// Type Inference
+printAnything(["a", "b"]);
+// Error
+// printAnything<number>(['a','b'])
+```
+
+#### Generic Constraints
+
+```ts
+class Car {
+  print() {
+    console.log("CAR");
+  }
+}
+
+class House {
+  print() {
+    console.log("HOUSE");
+  }
+}
+
+interface Printable {
+  print(): void;
+}
+
+//Constraint will make sure that we will have a print method for type T.
+// This is called adding a constraint
+function printHousesAndCar<T extends Printable>(arr: T[]): void {
+  for (let i = 0; i < arr.length; i++) {
+    // It says that type t has no gaurantee that there will be print method
+    arr[i].print();
+  }
+}
+
+// Gives error because numbers don't have print method defined in Printable constraint
+// printHousesAndCar([1, 2, 3]);
+printHousesAndCar([new House(), new Car()]);
+```
 
 ## Packages
 
