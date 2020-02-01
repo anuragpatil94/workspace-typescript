@@ -33,6 +33,8 @@
       - [Automate Compiling and Execution](#automate-compiling-and-execution)
     - [Type Guard](#type-guard)
   - [(Project) Football Stats](#project-football-stats)
+    - [ENUM](#enum)
+      - [When to use ENUM](#when-to-use-enum)
   - [Packages](#packages)
 
 ## Goals
@@ -449,6 +451,26 @@ car.honk();
 ## (Project) Football Stats
 
 - CSV -> Load -> Parse -> ANalyze -> Report
+
+### ENUM
+
+- This will also create a new type
+
+```ts
+// Just a way to show that the properties of an enum are very closely related values
+enum MatchResult {
+  HomeWin = "H",
+  AwayWin = "A",
+  Draw = "D"
+}
+```
+
+#### When to use ENUM
+
+- Follow near-identical syntax rules as normal objects
+- Creates an object with the same keys and values when converted from TS to JS
+- Primary goal is to signal to other engineers that these are all closely related values
+- Use whenever we have a small fixed set of values that are all closely related and known at compile time
 
 ## Packages
 
