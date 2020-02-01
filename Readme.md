@@ -458,4 +458,5 @@ car.honk();
 - `faker` - To generate fake data
 - `nodemon` - Rerun node anytime changes are detected
 - `concurrently` - Run multiple script at the same time
+- `@types/node` - type definition file for all internal node modules
   
