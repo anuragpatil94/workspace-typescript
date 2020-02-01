@@ -40,6 +40,7 @@
     - [Reusability](#reusability)
       - [Refactor #1](#refactor-1)
       - [Refactor #2](#refactor-2)
+      - [Refactor #3](#refactor-3)
     - [Generics](#generics)
   - [Packages](#packages)
 
@@ -537,6 +538,10 @@ export class CSVFileReader {
 
 - Since we don't want any reference to Football match in CSVFileReader, we have to somehow remove MatchData Type from the file. But that would create a issue because data property needs to have a type.
 - We can change is to `any` but that's a bad refactor. Hence we use `Generics`
+
+#### Refactor #3
+
+- Using Interface
 
 ### Generics
 
