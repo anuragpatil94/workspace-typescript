@@ -43,6 +43,7 @@
     - [Retrospective (Interface or Abstract Class)](#retrospective-interface-or-abstract-class)
     - [Generics](#generics)
       - [Class Generics](#class-generics)
+      - [Function Generics](#function-generics)
   - [Packages](#packages)
 
 ## Goals
@@ -629,6 +630,22 @@ new ArrayOfAnything<string>(["a", "b"]);
 
 // Uses type inference to make generic type = string because it checks array of strings
 const arr = new ArrayOfAnything(["a", "b"]);
+```
+
+#### Function Generics
+
+```ts
+function printAnything<T>(arr: T[]): void {
+  for (let i = 0; i < arr.length; i++) {
+    console.log(arr[i]);
+  }
+}
+
+printAnything<string>(["a", "b"]);
+// Type Inference
+printAnything(["a", "b"]);
+// Error
+// printAnything<number>(['a','b'])
 ```
 
 ## Packages

@@ -76,3 +76,30 @@ new ArrayOfAnything<string>(["a", "b"]);
 
 // Uses type inference to make generic type = string
 const arr = new ArrayOfAnything(["a", "b"]);
+
+// ------------------------------------------------------------------------------------------------------------------
+// Function Generics
+
+function printStrings(arr: string[]): void {
+  for (let i = 0; i < arr.length; i++) {
+    console.log(arr[i]);
+  }
+}
+
+function printNumbers(arr: number[]): void {
+  for (let i = 0; i < arr.length; i++) {
+    console.log(arr[i]);
+  }
+}
+
+function printAnything<T>(arr: T[]): void {
+  for (let i = 0; i < arr.length; i++) {
+    console.log(arr[i]);
+  }
+}
+
+printAnything<string>(["a", "b"]);
+// Type Inference
+printAnything(["a", "b"]);
+// Error
+// printAnything<number>(['a','b'])
