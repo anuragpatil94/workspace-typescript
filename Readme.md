@@ -32,6 +32,16 @@
     - [Typescript Compiler Configuration](#typescript-compiler-configuration)
       - [Automate Compiling and Execution](#automate-compiling-and-execution)
     - [Type Guard](#type-guard)
+  - [(Project) Football Stats](#project-football-stats)
+    - [ENUM](#enum)
+      - [When to use ENUM](#when-to-use-enum)
+    - [Type Assertion](#type-assertion)
+      - [Converting to TUPLE](#converting-to-tuple)
+    - [Reusability](#reusability)
+      - [Refactor #1](#refactor-1)
+      - [Refactor #3](#refactor-3)
+    - [Retrospective (Interface or Abstract Class)](#retrospective-interface-or-abstract-class)
+    - [Generics](#generics)
   - [Packages](#packages)
 
 ## Goals
@@ -445,6 +455,164 @@ car.honk();
 
 - `this.collection instanceof Array`
 
+## (Project) Football Stats
+
+- CSV -> Load -> Parse -> ANalyze -> Report
+- Topics Covered
+  - `enum`
+  - `generics`
+  - `abstract class`
+  - `composition`
+
+### ENUM
+
+- This will also create a new type
+
+```ts
+// Just a way to show that the properties of an enum are very closely related values
+enum MatchResult {
+  HomeWin = "H",
+  AwayWin = "A",
+  Draw = "D"
+}
+```
+
+#### When to use ENUM
+
+- Follow near-identical syntax rules as normal objects
+- Creates an object with the same keys and values when converted from TS to JS
+- Primary goal is to signal to other engineers that these are all closely related values
+- Use whenever we have a small fixed set of values that are all closely related and known at compile time
+
+### Type Assertion
+
+```ts
+return [
+  dateStringToDate(row[0]),
+  row[1],
+  row[2],
+  parseInt(row[3]),
+  parseInt(row[4]),
+  row[5] as MatchResult                  // default behavior was that row[5] was a string. This is Type Assertion where we are trying to override Typescript's default behavior
+];
+
+// Instead of array since the index of each property won't change we will use TUPLE
+```
+
+#### Converting to TUPLE
+
+```ts
+// New Tuple
+type MatchData = [Date, string, string, number, number, MatchResult, string];
+
+export class CSVFileReader {
+  data: MatchData[] = [];                               // Changes Here
+  constructor(public filename: string) {}
+  read(): void {
+    this.data = fs
+      .readFileSync(this.filename, {
+        encoding: "utf-8"
+      })
+      .trim()
+      .split("\n")
+      .map((row: string): string[] => row.split(","))
+      .map(
+        (row: string[]): MatchData => {                              // Changes Here
+          return [
+            dateStringToDate(row[0]),
+            row[1],
+            row[2],
+            parseInt(row[3]),
+            parseInt(row[4]),
+            row[5] as MatchResult,
+            row[6]
+          ];
+        }
+      );
+  }
+}
+```
+
+### Reusability
+
+#### Refactor #1
+
+- Make CSVFileReader class a Abstract Class so that if in future we have any other kind of data, it can use CSVFileReader and create its own class that extends it.
+- Since we don't want any reference to Football match in CSVFileReader, we have to somehow remove MatchData Type from the file. But that would create a issue because data property needs to have a type.
+- We can change is to `any` but that's a bad refactor. Hence we use `Generics`
+
+#### Refactor #3
+
+- Using Interface
+- So here what we are doing is creating a `interface` called `DataReader` which has same methods as `CSVFileReader`. This makes sure that infuture if we have any other file readers it would have this method and then we can use it for our own `<ANY>DataReader`.
+- The way we do is we pass which reader we want to use as a parameter to out custom MatchReader Class, so that it can use the reusable code
+
+### Retrospective (Interface or Abstract Class)
+
+- INHERITANCE VS COMPOSITION
+- IS A vs HAS A
+- Delegating other classes in the Class if what Composition is so that class can use delegated classes.
+
+### Generics
+
+- Like functio narguments, but for types in class/function definitions
+- Allows us to define the type of a propery/argument/return value at a future point
+- Used for reusability
+
+```ts
+// Noting to do with generics
+
+const addOne = (a: number): number => {
+  return a + 1;
+};
+const addTwo = (a: number): number => {
+  return a + 2;
+};
+
+// Instead of above where we are just creating a new function everytime we do below
+// Kindof a Generic but not really. but generic is same concept
+const add = (a: number, b: number): number => {
+  return a + b;
+};
+add(10, 1);
+add(10, 2);
+
+// Another Example
+class HoldNumber {
+  data: number;
+}
+class HoldString {
+  data: string;
+}
+
+const holdNumebr = new HoldNumber();
+holdNumebr.data = 123;
+
+const holdString = new HoldString();
+holdString.data = "asdlfkh";
+
+// GENERICS
+// Customize the definition of the class
+// What we are trying to do is add type on the fly so that we don't have to create a duplicate class everytime.
+// This is like an argument just the same way as we added b in the add function.
+// If you understand the add analogy what we are doing here is same. instead of b -> <TypeOfData> for a class.
+class HoldAnything<TypeOfData> {
+  data: TypeOfData;
+}
+
+const holdAnythingNumber = new HoldAnything<number>();
+// gives error
+// holdAnythingNumber.data = "akjsdfh";
+holdAnythingNumber.data = 124;
+
+const holdAnythingDate = new HoldAnything<Date>();
+// Error
+// holdAnythingDate.data = "2018/12/03";
+holdAnythingDate.data = new Date();
+```
+
+- By Covention Generic Type has a very small name so. instead of `<TypeOfData>` it will be `<T>`
+
 ## Packages
 
 - `typescript`
@@ -453,4 +621,5 @@ car.honk();
 - `faker` - To generate fake data
 - `nodemon` - Rerun node anytime changes are detected
 - `concurrently` - Run multiple script at the same time
+- `@types/node` - type definition file for all internal node modules
   
