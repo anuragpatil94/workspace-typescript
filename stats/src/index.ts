@@ -1,12 +1,7 @@
-import fs from "fs";
+import { CSVFileReader } from "./CSVFileReader";
 
-const matches = fs
-  .readFileSync("football.csv", {
-    encoding: "utf-8"
-  })
-  .trim()
-  .split("\n")
-  .map((row: string): string[] => row.split(","));
+const reader = new CSVFileReader("football.csv");
+reader.read();
 
 // Refactoring code to remove hardcoding of homeWin and awayWin
 // const MatchResult = {
@@ -26,7 +21,7 @@ enum MatchResult {
 // console.table(matches);
 let manUnitedWins = 0;
 
-for (let match of matches) {
+for (let match of reader.data) {
   if (match[1] === "Man United" && match[5] === MatchResult.HomeWin) {
     manUnitedWins++;
   } else if (match[2] === "Man United" && match[5] === MatchResult.AwayWin) {
