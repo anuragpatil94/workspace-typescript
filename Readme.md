@@ -39,8 +39,8 @@
       - [Converting to TUPLE](#converting-to-tuple)
     - [Reusability](#reusability)
       - [Refactor #1](#refactor-1)
-      - [Refactor #2](#refactor-2)
       - [Refactor #3](#refactor-3)
+    - [Retrospective (Interface or Abstract Class)](#retrospective-interface-or-abstract-class)
     - [Generics](#generics)
   - [Packages](#packages)
 
@@ -533,15 +533,20 @@ export class CSVFileReader {
 #### Refactor #1
 
 - Make CSVFileReader class a Abstract Class so that if in future we have any other kind of data, it can use CSVFileReader and create its own class that extends it.
-
-#### Refactor #2
-
 - Since we don't want any reference to Football match in CSVFileReader, we have to somehow remove MatchData Type from the file. But that would create a issue because data property needs to have a type.
 - We can change is to `any` but that's a bad refactor. Hence we use `Generics`
 
 #### Refactor #3
 
 - Using Interface
+- So here what we are doing is creating a `interface` called `DataReader` which has same methods as `CSVFileReader`. This makes sure that infuture if we have any other file readers it would have this method and then we can use it for our own `<ANY>DataReader`.
+- The way we do is we pass which reader we want to use as a parameter to out custom MatchReader Class, so that it can use the reusable code
+
+### Retrospective (Interface or Abstract Class)
+
+- INHERITANCE VS COMPOSITION
+- IS A vs HAS A
+- Delegating other classes in the Class if what Composition is so that class can use delegated classes.
 
 ### Generics
 
