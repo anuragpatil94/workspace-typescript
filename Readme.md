@@ -45,6 +45,7 @@
       - [Class Generics](#class-generics)
       - [Function Generics](#function-generics)
       - [Generic Constraints](#generic-constraints)
+  - [Decorators](#decorators)
   - [Packages](#packages)
 
 ## Goals
@@ -680,6 +681,40 @@ function printHousesAndCar<T extends Printable>(arr: T[]): void {
 // Gives error because numbers don't have print method defined in Printable constraint
 // printHousesAndCar([1, 2, 3]);
 printHousesAndCar([new House(), new Car()]);
+```
+
+## Decorators
+
+- Function that can be used to modify/change/anything different properties/methods in the class
+- Not the same as Javascript decorators
+- Used on classes only
+- Understanding the order in which decorators are ran are the key to understanding them.
+
+ > Enable the `"experimentalDecorators"` and `"emitDecoratorMetadata"` flags in tsconfig
+
+```typescript
+    class Boat {
+      color: string = "red";
+
+      get formattedColor(): string {
+        return `This boat's color is ${this.color}`;
+      }
+
+      @testDecorator
+      pilot(): void {
+        console.log("Jush");
+      }
+    }
+
+    // 1st Decorator
+    function testDecorator(target: any, key: string): void {
+      console.log("Target: ", target);
+      console.log("Key:", key);
+    }
+
+Output:
+  Target:  Boat { formattedColor: [Getter], pilot: [Function] }
+  Key: pilot
 ```
 
 ## Packages
