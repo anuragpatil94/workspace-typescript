@@ -50,6 +50,7 @@
   - [(Project) Typescript with Express](#project-typescript-with-express)
     - [TS with JS Libraries](#ts-with-js-libraries)
     - [Overview](#overview)
+    - [Dealing with bad typescript](#dealing-with-bad-typescript)
   - [Packages](#packages)
 
 ## Goals
@@ -720,6 +721,10 @@ printHousesAndCar([new House(), new Car()]);
   - features
     - protected routes
   - 2 versions
+
+### Dealing with bad typescript
+
+Solution 1 - Create your own interface extending the library interface
 
 ## Packages
 

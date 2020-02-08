@@ -1,4 +1,10 @@
 import { Router, Request, Response } from "express";
+
+interface RequestWithBody extends Request {
+  body: { [key: string]: string | undefined };
+  jel?: string;
+}
+
 const router = Router();
 
 router.get("/login", (req: Request, res: Response) => {
@@ -16,6 +22,15 @@ router.get("/login", (req: Request, res: Response) => {
   </form>
 
   `);
+});
+
+router.post("/login", (req: RequestWithBody, res: Response) => {
+  const { email, password } = req.body;
+  if (email) {
+    res.send(email.toLowerCase());
+  } else {
+    res.send("You must provide email");
+  }
 });
 
 export { router };
