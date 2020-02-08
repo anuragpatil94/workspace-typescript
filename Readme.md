@@ -48,6 +48,7 @@
   - [Decorators](#decorators)
     - [Property Descriptor](#property-descriptor)
     - [Decorator Factory](#decorator-factory)
+    - [Disadvantage](#disadvantage)
   - [Packages](#packages)
 
 ## Goals
@@ -797,6 +798,10 @@ new Boat().pilot();
 
   new Boat().pilot();
 ```
+
+### Disadvantage
+
+- Cannot access instace properties
 
 ## Packages
 

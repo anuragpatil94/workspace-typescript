@@ -1,4 +1,5 @@
 class Boat {
+  @testDecorator
   color: string = "red";
 
   get formattedColor(): string {
@@ -15,6 +16,14 @@ class Boat {
     console.log("Jush");
   }
 }
+/**
+ * Decorator cannot access any instance property ever
+ * @param target
+ * @param key
+ */
+function testDecorator(target: any, key: string) {
+  console.log(target, key);
+}
 
 /**
  *
@@ -22,7 +31,6 @@ class Boat {
  * @param key key on which decorator is to be applied
  * @param desc Object that has some configuration options around a property defied in the class object
  */
-
 function logError(errorMessage: string) {
   return function(target: any, key: string, desc: PropertyDescriptor): void {
     const method = desc.value;
@@ -36,4 +44,4 @@ function logError(errorMessage: string) {
   };
 }
 
-new Boat().pilot();
+// new Boat().pilot();
