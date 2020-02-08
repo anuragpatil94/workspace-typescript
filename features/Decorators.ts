@@ -1,7 +1,9 @@
+@classDecorator
 class Boat {
   @testDecorator
   color: string = "red";
 
+  @testDecorator
   get formattedColor(): string {
     return `This boat's color is ${this.color}`;
   }
@@ -15,14 +17,31 @@ class Boat {
     throw new Error();
     console.log("Jush");
   }
+
+  move(
+    @paramDecorator speed: string,
+    @paramDecorator b: string,
+    c: number
+  ): void {
+    throw new Error();
+  }
 }
+
+function paramDecorator(target: any, key: string, index: number) {
+  console.log(key, index);
+}
+
+function classDecorator(constructor: typeof Boat) {
+  console.log(constructor);
+}
+
 /**
  * Decorator cannot access any instance property ever
  * @param target
  * @param key
  */
 function testDecorator(target: any, key: string) {
-  console.log(target, key);
+  console.log(key);
 }
 
 /**

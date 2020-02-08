@@ -48,6 +48,8 @@
   - [Decorators](#decorators)
     - [Property Descriptor](#property-descriptor)
     - [Decorator Factory](#decorator-factory)
+    - [Parameter Decorator](#parameter-decorator)
+    - [Class Decorator](#class-decorator)
     - [Disadvantage](#disadvantage)
   - [Packages](#packages)
 
@@ -797,6 +799,40 @@ new Boat().pilot();
   }
 
   new Boat().pilot();
+```
+
+### Parameter Decorator
+
+```typescript
+  move(
+    @paramDecorator speed: string,
+    @paramDecorator b: string,
+    c: number
+  ): void {
+    throw new Error();
+  }
+
+
+function paramDecorator(target: any, key: string, index: number) {
+  console.log(key, index);
+}
+
+Output:
+move 1
+move 0
+```
+
+### Class Decorator
+
+```ts
+@classDecorator
+class Boat {}
+
+function classDecorator(constructor: typeof Boat) {
+  console.log(constructor);
+}
+Output:
+[Function: Boat]
 ```
 
 ### Disadvantage
