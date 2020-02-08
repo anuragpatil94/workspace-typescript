@@ -756,12 +756,19 @@ printHousesAndCar([new House(), new Car()]);
      * @param key key on which decorator is to be applied
      * @param desc Object that has some configuration options around a property defied in the class object
      */
-    function logError(target: any, key: string, desc: PropertyDecorator): void {
-      console.log("Target: ", target);
-      console.log("Key:", key);
+function logError(target: any, key: string, desc: PropertyDescriptor): void {
+  const method = desc.value;
+  desc.value = function() {
+    try {
+      method();
+    } catch (e) {
+      console.log("Boat was sunk!");
     }
-```
+  };
+}
 
+new Boat().pilot();
+```
 
 ## Packages
 
