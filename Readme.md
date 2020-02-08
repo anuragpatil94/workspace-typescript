@@ -10,6 +10,7 @@
     - [Syntax + Features](#syntax--features)
     - [Design Patterns with TS](#design-patterns-with-ts)
   - [Advantages](#advantages)
+  - [Setup Typescript](#setup-typescript)
   - [Commands](#commands)
     - [Run Typescript](#run-typescript)
   - [Steps](#steps)
@@ -75,6 +76,21 @@
 - 👤 Uses 'type annotations' to analyze our code
 - Only active during development
 - ❌Doesn't provide any performance optimization
+
+## Setup Typescript
+
+1. create tsconfig.json - `tsc --init`
+2. uncomment `"outDir"` and set it to build/ folder 
+3. uncomment `"rootDir"` and set it to the folder that is to be build. ex src/
+4. Following scripts in package.json
+
+   ```json
+    "scripts": {
+      "start:build": "tsc -w",
+      "start:run": "nodemon build/index.js",
+      "start": "concurrently npm:start:*"
+    }
+   ```
 
 ## Commands
 
