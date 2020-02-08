@@ -694,14 +694,14 @@ printHousesAndCar([new House(), new Car()]);
 
 ```typescript
     class Boat {
-      color: string = "red";
+      color: string = "red";                    //Property
 
-      get formattedColor(): string {
+      get formattedColor(): string {            //accessor
         return `This boat's color is ${this.color}`;
       }
 
       @testDecorator
-      pilot(): void {
+      pilot(): void {                           //method
         console.log("Jush");
       }
     }
@@ -715,7 +715,15 @@ printHousesAndCar([new House(), new Car()]);
 Output:
   Target:  Boat { formattedColor: [Getter], pilot: [Function] }
   Key: pilot
+
+testDecorator(Boat.prototype, "pilot");   ----- same as -----    @testDecorator
 ```
+
+- Decorators are applicable for Property, Accessor or Method
+  - First argument `target` is prototype of the object `Boat`
+  - Second argument is the key of the property/method/accessor on the object
+  - Third argument is the property descriptor
+  - Decorator are applied *ONE SINGLE TIME* when the code for this class is ran ie.when Javascript 1st parses whole code. (**NOT WHEN THE INSTANCE IS CREATED**).
 
 ## Packages
 
