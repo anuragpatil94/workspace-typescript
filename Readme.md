@@ -45,6 +45,10 @@
       - [Class Generics](#class-generics)
       - [Function Generics](#function-generics)
       - [Generic Constraints](#generic-constraints)
+  - [(Project) Web Framework](#project-web-framework)
+  - [(Project) Typescript with Express](#project-typescript-with-express)
+    - [TS with JS Libraries](#ts-with-js-libraries)
+    - [Overview](#overview)
   - [Packages](#packages)
 
 ## Goals
@@ -681,6 +685,25 @@ function printHousesAndCar<T extends Printable>(arr: T[]): void {
 // printHousesAndCar([1, 2, 3]);
 printHousesAndCar([new House(), new Car()]);
 ```
+
+## (Project) Web Framework
+
+- [Github Repository](https://github.com/anuragpatil94/Web-Framework)
+
+## (Project) Typescript with Express
+
+### TS with JS Libraries
+
+- Use the lib normally, adding in basic type annotations where possible
+- Use a TS Adapter that has helpers for using your lib with TS
+- Twist your library to work with TS classes
+
+### Overview
+
+- A simple authentication application
+  - features
+    - protected routes
+  - 2 versions
 
 ## Packages
 
