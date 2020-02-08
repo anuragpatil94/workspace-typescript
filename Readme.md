@@ -10,6 +10,7 @@
     - [Syntax + Features](#syntax--features)
     - [Design Patterns with TS](#design-patterns-with-ts)
   - [Advantages](#advantages)
+  - [Setup Typescript](#setup-typescript)
   - [Commands](#commands)
     - [Run Typescript](#run-typescript)
   - [Steps](#steps)
@@ -45,6 +46,12 @@
       - [Class Generics](#class-generics)
       - [Function Generics](#function-generics)
       - [Generic Constraints](#generic-constraints)
+  - [(Project) Web Framework](#project-web-framework)
+  - [(Project) Typescript with Express](#project-typescript-with-express)
+    - [TS with JS Libraries](#ts-with-js-libraries)
+    - [Overview](#overview)
+    - [Dealing with bad typescript](#dealing-with-bad-typescript)
+    - [Integrating Typescript with Express Code](#integrating-typescript-with-express-code)
   - [Packages](#packages)
 
 ## Goals
@@ -71,6 +78,21 @@
 - 👤 Uses 'type annotations' to analyze our code
 - Only active during development
 - ❌Doesn't provide any performance optimization
+
+## Setup Typescript
+
+1. create tsconfig.json - `tsc --init`
+2. uncomment `"outDir"` and set it to build/ folder
+3. uncomment `"rootDir"` and set it to the folder that is to be build. ex src/
+4. Following scripts in package.json
+
+   ```json
+    "scripts": {
+      "start:build": "tsc -w",
+      "start:run": "nodemon build/index.js",
+      "start": "concurrently npm:start:*"
+    }
+   ```
 
 ## Commands
 
@@ -681,6 +703,35 @@ function printHousesAndCar<T extends Printable>(arr: T[]): void {
 // printHousesAndCar([1, 2, 3]);
 printHousesAndCar([new House(), new Car()]);
 ```
+
+## (Project) Web Framework
+
+- [Github Repository](https://github.com/anuragpatil94/Web-Framework)
+
+## (Project) Typescript with Express
+
+### TS with JS Libraries
+
+- Use the lib normally, adding in basic type annotations where possible
+- Use a TS Adapter that has helpers for using your lib with TS
+- Twist your library to work with TS classes
+
+### Overview
+
+- A simple authentication application
+  - features
+    - protected routes
+  - 2 versions
+
+### Dealing with bad typescript
+
+Solution 1 - Create your own interface extending the library interface
+
+### Integrating Typescript with Express Code
+
+1. Hard Way - Put express code into classes + use some advanced features of TS
+   1. Advanced Features?
+      1. DECORATORS
 
 ## Packages
 
