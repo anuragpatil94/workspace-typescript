@@ -46,6 +46,7 @@
       - [Function Generics](#function-generics)
       - [Generic Constraints](#generic-constraints)
   - [Decorators](#decorators)
+    - [Property Descriptor](#property-descriptor)
   - [Packages](#packages)
 
 ## Goals
@@ -712,11 +713,11 @@ printHousesAndCar([new House(), new Car()]);
       console.log("Key:", key);
     }
 
-Output:
-  Target:  Boat { formattedColor: [Getter], pilot: [Function] }
-  Key: pilot
+    Output:
+      Target:  Boat { formattedColor: [Getter], pilot: [Function] }
+      Key: pilot
 
-testDecorator(Boat.prototype, "pilot");   ----- same as -----    @testDecorator
+    testDecorator(Boat.prototype, "pilot");   ----- same as -----    @testDecorator
 ```
 
 - Decorators are applicable for Property, Accessor or Method
@@ -724,6 +725,43 @@ testDecorator(Boat.prototype, "pilot");   ----- same as -----    @testDecorator
   - Second argument is the key of the property/method/accessor on the object
   - Third argument is the property descriptor
   - Decorator are applied *ONE SINGLE TIME* when the code for this class is ran ie.when Javascript 1st parses whole code. (**NOT WHEN THE INSTANCE IS CREATED**).
+
+### Property Descriptor
+
+- For `Methods`
+  - `writable` : Whether or not this property can be changed
+  - `enumerable` : Whether or not this propety get looped over by a `for...in`
+  - `value` : current value
+  - `configurable` : property definition can be changed and propery can be deleted
+
+```typescript
+    class Boat {
+      color: string = "red";
+      get formattedColor(): string {
+        return `This boat's color is ${this.color}`;
+      }
+      /**
+       * We are trying to excute a piece of code such that whenever pilot is called and
+       * we get an error, we run this decorator code
+       */
+      @logError
+      pilot(): void {
+        throw new Error();
+        console.log("Jush");
+      }
+    }
+    /**
+     *
+     * @param target Object.Prototype
+     * @param key key on which decorator is to be applied
+     * @param desc Object that has some configuration options around a property defied in the class object
+     */
+    function logError(target: any, key: string, desc: PropertyDecorator): void {
+      console.log("Target: ", target);
+      console.log("Key:", key);
+    }
+```
+
 
 ## Packages
 
