@@ -47,6 +47,7 @@
       - [Generic Constraints](#generic-constraints)
   - [Decorators](#decorators)
     - [Property Descriptor](#property-descriptor)
+    - [Decorator Factory](#decorator-factory)
   - [Packages](#packages)
 
 ## Goals
@@ -768,6 +769,33 @@ function logError(target: any, key: string, desc: PropertyDescriptor): void {
 }
 
 new Boat().pilot();
+```
+
+### Decorator Factory
+
+- Basically passing a param through decorator
+
+```typescript
+  @logError("Boat Sunk!!")
+  pilot(): void {
+    throw new Error();
+    console.log("Jush");
+  }
+
+  function logError(errorMessage: string) {
+    return function(target: any, key: string, desc: PropertyDescriptor): void {
+      const method = desc.value;
+      desc.value = function() {
+        try {
+          method();
+        } catch (e) {
+          console.log(errorMessage);
+        }
+      };
+    };
+  }
+
+  new Boat().pilot();
 ```
 
 ## Packages
