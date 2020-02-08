@@ -51,6 +51,7 @@
     - [TS with JS Libraries](#ts-with-js-libraries)
     - [Overview](#overview)
     - [Dealing with bad typescript](#dealing-with-bad-typescript)
+    - [Integrating Typescript with Express Code](#integrating-typescript-with-express-code)
   - [Packages](#packages)
 
 ## Goals
@@ -725,6 +726,12 @@ printHousesAndCar([new House(), new Car()]);
 ### Dealing with bad typescript
 
 Solution 1 - Create your own interface extending the library interface
+
+### Integrating Typescript with Express Code
+
+1. Hard Way - Put express code into classes + use some advanced features of TS
+   1. Advanced Features?
+      1. DECORATORS
 
 ## Packages
 
