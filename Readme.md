@@ -52,6 +52,12 @@
     - [Overview](#overview)
     - [Dealing with bad typescript](#dealing-with-bad-typescript)
     - [Integrating Typescript with Express Code](#integrating-typescript-with-express-code)
+  - [Decorators](#decorators)
+    - [Property Descriptor](#property-descriptor)
+    - [Decorator Factory](#decorator-factory)
+    - [Parameter Decorator](#parameter-decorator)
+    - [Class Decorator](#class-decorator)
+    - [Disadvantage](#disadvantage)
   - [Packages](#packages)
 
 ## Goals
@@ -732,6 +738,157 @@ Solution 1 - Create your own interface extending the library interface
 1. Hard Way - Put express code into classes + use some advanced features of TS
    1. Advanced Features?
       1. DECORATORS
+
+## Decorators
+
+- Function that can be used to modify/change/anything different properties/methods in the class
+- Not the same as Javascript decorators
+- Used on classes only
+- Understanding the order in which decorators are ran are the key to understanding them.
+
+ > Enable the `"experimentalDecorators"` and `"emitDecoratorMetadata"` flags in tsconfig
+
+```typescript
+    class Boat {
+      color: string = "red";                    //Property
+
+      get formattedColor(): string {            //accessor
+        return `This boat's color is ${this.color}`;
+      }
+
+      @testDecorator
+      pilot(): void {                           //method
+        console.log("Jush");
+      }
+    }
+
+    // 1st Decorator
+    function testDecorator(target: any, key: string): void {
+      console.log("Target: ", target);
+      console.log("Key:", key);
+    }
+
+    Output:
+      Target:  Boat { formattedColor: [Getter], pilot: [Function] }
+      Key: pilot
+
+    testDecorator(Boat.prototype, "pilot");   ----- same as -----    @testDecorator
+```
+
+- Decorators are applicable for Property, Accessor or Method
+  - First argument `target` is prototype of the object `Boat`
+  - Second argument is the key of the property/method/accessor on the object
+  - Third argument is the property descriptor
+  - Decorator are applied *ONE SINGLE TIME* when the code for this class is ran ie.when Javascript 1st parses whole code. (**NOT WHEN THE INSTANCE IS CREATED**).
+
+### Property Descriptor
+
+- For `Methods`
+  - `writable` : Whether or not this property can be changed
+  - `enumerable` : Whether or not this propety get looped over by a `for...in`
+  - `value` : current value
+  - `configurable` : property definition can be changed and propery can be deleted
+
+```typescript
+    class Boat {
+      color: string = "red";
+      get formattedColor(): string {
+        return `This boat's color is ${this.color}`;
+      }
+      /**
+       * We are trying to excute a piece of code such that whenever pilot is called and
+       * we get an error, we run this decorator code
+       */
+      @logError
+      pilot(): void {
+        throw new Error();
+        console.log("Jush");
+      }
+    }
+    /**
+     *
+     * @param target Object.Prototype
+     * @param key key on which decorator is to be applied
+     * @param desc Object that has some configuration options around a property defied in the class object
+     */
+function logError(target: any, key: string, desc: PropertyDescriptor): void {
+  const method = desc.value;
+  desc.value = function() {
+    try {
+      method();
+    } catch (e) {
+      console.log("Boat was sunk!");
+    }
+  };
+}
+
+new Boat().pilot();
+```
+
+### Decorator Factory
+
+- Basically passing a param through decorator
+
+```typescript
+  @logError("Boat Sunk!!")
+  pilot(): void {
+    throw new Error();
+    console.log("Jush");
+  }
+
+  function logError(errorMessage: string) {
+    return function(target: any, key: string, desc: PropertyDescriptor): void {
+      const method = desc.value;
+      desc.value = function() {
+        try {
+          method();
+        } catch (e) {
+          console.log(errorMessage);
+        }
+      };
+    };
+  }
+
+  new Boat().pilot();
+```
+
+### Parameter Decorator
+
+```typescript
+  move(
+    @paramDecorator speed: string,
+    @paramDecorator b: string,
+    c: number
+  ): void {
+    throw new Error();
+  }
+
+
+function paramDecorator(target: any, key: string, index: number) {
+  console.log(key, index);
+}
+
+Output:
+move 1
+move 0
+```
+
+### Class Decorator
+
+```ts
+@classDecorator
+class Boat {}
+
+function classDecorator(constructor: typeof Boat) {
+  console.log(constructor);
+}
+Output:
+[Function: Boat]
+```
+
+### Disadvantage
+
+- Cannot access instace properties
 
 ## Packages
 
