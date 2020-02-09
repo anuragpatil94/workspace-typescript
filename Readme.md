@@ -1088,7 +1088,6 @@ export const post = routeBinder("post");
 export const put = routeBinder("put");
 export const del = routeBinder("del");
 export const patch = routeBinder("patch");
-
 ```
 
 ## Packages
