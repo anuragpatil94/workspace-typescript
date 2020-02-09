@@ -1,11 +1,16 @@
 import "reflect-metadata";
 import { Methods } from "./Methods";
 import { MetadataKeys } from "./MetadataKeys";
+import { RequestHandler } from "express";
+
+interface RouteHandlerDescriptor extends PropertyDescriptor {
+  value?: RequestHandler;
+}
 
 // Avoid Duplication so create a binder to call it for different methods
 function routeBinder(method: string) {
   return function(path: string) {
-    return (target: any, key: string, desc: PropertyDescriptor): void => {
+    return (target: any, key: string, desc: RouteHandlerDescriptor): void => {
       /**
        * 1st: name of the metadata variable we want to create
        * 2nd: value of the metadata we have to store
