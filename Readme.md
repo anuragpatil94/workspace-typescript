@@ -47,17 +47,23 @@
       - [Function Generics](#function-generics)
       - [Generic Constraints](#generic-constraints)
   - [(Project) Web Framework](#project-web-framework)
-  - [(Project) Typescript with Express](#project-typescript-with-express)
-    - [TS with JS Libraries](#ts-with-js-libraries)
-    - [Overview](#overview)
-    - [Dealing with bad typescript](#dealing-with-bad-typescript)
-    - [Integrating Typescript with Express Code](#integrating-typescript-with-express-code)
   - [Decorators](#decorators)
     - [Property Descriptor](#property-descriptor)
     - [Decorator Factory](#decorator-factory)
     - [Parameter Decorator](#parameter-decorator)
     - [Class Decorator](#class-decorator)
     - [Disadvantage](#disadvantage)
+  - [(Project) Typescript with Express](#project-typescript-with-express)
+    - [TS with JS Libraries](#ts-with-js-libraries)
+    - [Overview](#overview)
+    - [Dealing with bad typescript](#dealing-with-bad-typescript)
+    - [Integrating Typescript with Express Code](#integrating-typescript-with-express-code)
+    - [Using Decorators](#using-decorators)
+      - [Solution on how to make sure how the decorators are ran](#solution-on-how-to-make-sure-how-the-decorators-are-ran)
+      - [Metadata](#metadata)
+    - [Metadata for Login](#metadata-for-login)
+    - [RouteBinding](#routebinding)
+    - [Working Process](#working-process)
   - [Packages](#packages)
 
 ## Goals
@@ -714,31 +720,6 @@ printHousesAndCar([new House(), new Car()]);
 
 - [Github Repository](https://github.com/anuragpatil94/Web-Framework)
 
-## (Project) Typescript with Express
-
-### TS with JS Libraries
-
-- Use the lib normally, adding in basic type annotations where possible
-- Use a TS Adapter that has helpers for using your lib with TS
-- Twist your library to work with TS classes
-
-### Overview
-
-- A simple authentication application
-  - features
-    - protected routes
-  - 2 versions
-
-### Dealing with bad typescript
-
-Solution 1 - Create your own interface extending the library interface
-
-### Integrating Typescript with Express Code
-
-1. Hard Way - Put express code into classes + use some advanced features of TS
-   1. Advanced Features?
-      1. DECORATORS
-
 ## Decorators
 
 - Function that can be used to modify/change/anything different properties/methods in the class
@@ -890,6 +871,233 @@ Output:
 
 - Cannot access instace properties
 
+## (Project) Typescript with Express
+
+### TS with JS Libraries
+
+- Use the lib normally, adding in basic type annotations where possible
+- Use a TS Adapter that has helpers for using your lib with TS
+- Twist your library to work with TS classes
+
+### Overview
+
+- A simple authentication application
+  - features
+    - protected routes
+  - 2 versions
+
+### Dealing with bad typescript
+
+Solution 1 - Create your own interface extending the library interface
+
+### Integrating Typescript with Express Code
+
+1. Hard Way - Put express code into classes + use some advanced features of TS
+   1. Advanced Features?
+      1. DECORATORS
+
+### Using Decorators
+
+```ts
+Example:
+
+@controller('/auth')          // All the routes will start as /auth/..
+class loginRoutes{
+  @post('/login)              // Route Path Controller
+  @validateBody('email','password')      // Validation
+  @use(requireAuth)                      // Auth
+  postLogin(req:Request, res:Response):void{
+    const { email, password } = req.body;
+    if (email && password && email === "a@b.com" && password === "pass") {
+      req.session = { loggedIn: true };
+      res.redirect("/");
+    } else {
+      res.send("Invalid Email or Password");
+    }
+  }
+}
+
+
+function post(routeName:string){
+  return function (target:any,key: string, desc: PropertyDescriptor){
+    // target[key] is basically postLogin function in class
+    router.post(routeName,target[key])
+  }
+}
+```
+
+#### Solution on how to make sure how the decorators are ran
+
+- Node executes code
+- Class definition rad in - devorators are executed
+- Decorators associate route confiturations info with the methods by using metadata.
+- all methods decorators run
+- Class decorator of '@controller' runs last
+- class decorator reads metadata from each method, adds complete route definitions to router
+
+#### Metadata
+
+- Snippets of info that can be tied to a mehod, property, or class definition
+- cna be used from super custom stuff
+- typescript will provide type information as metadata
+- read and written using the reflect-metadata package
+
+```ts
+const plane = {
+  color: "red"
+};
+
+// Generate or define metadata
+Reflect.defineMetadata("note", "Hi There!", plane);
+console.log(plane);
+
+// Get the metadata
+const note = Reflect.getMetadata("note", plane);
+console.log(note);
+
+// in this case metadata is assigned on a property of an object
+Reflect.defineMetadata("note", "Hi There!", plane, "color");
+console.log(Reflect.getMetadata("note", plane, "color"));
+ ```
+
+- `METADATA` is another object connected to target
+
+```ts
+@printMetadata
+class Plane {
+  color: string = "red";
+  @markFunction("Hi There! THis is secret")
+  fly(): void {
+    console.log("vrrrrrrrrrrrrrr");
+  }
+}
+// decorator
+function markFunction(secretInfo: string) {
+  return function(target: Plane, key: string) {
+    Reflect.defineMetadata("secret", secretInfo, target, key);
+  };
+}
+const secret = Reflect.getMetadata("secret", Plane.prototype, "fly");
+console.log("Outside :", secret);
+// decorator
+function printMetadata(target: typeof Plane) {
+  for (let key in target.prototype) {
+    const secret = Reflect.getMetadata("secret", target.prototype, key);
+    console.log("print metadata: ", secret);
+  }
+}
+
+OUTPUT:
+{ color: 'red' }
+Hi There!
+Hi There!
+print metadata:  Hi There! THis is secret
+Outside : Hi There! THis is secret
+```
+
+### Metadata for Login
+
+```ts
+// controllers
+@controller("/auth")
+class LoginController {
+  @get("/login")
+  getLogin(req: Request, res: Response): void {
+    res.send(`
+        <form method="POST">
+          <div>
+              <label>Email </label>
+              <input name="email"/>
+          </div>
+          <div>
+              <label>Password</label>
+              <input name="password" type="password"/>
+          </div>
+          <button>Submit</submit>
+        </form>
+        `);
+  }
+}
+
+// decorators
+import "reflect-metadata";
+export function get(path: string) {
+  return (target: any, key: string, desc: PropertyDescriptor): void => {
+    /**
+     * 1st: name of the metadata variable we want to create
+     * 2nd: value of the metadata we have to store
+     * 3rd: target is the target object for which we are
+     * defining metadata in this case maybe a class.
+     * This is because as we saw that every class is stored like a object
+     * and has a prototype object.
+     * 4th: property of that object. if considered class as an object then its
+     * functions are the properties
+     */
+    Reflect.defineMetadata("path", path, target, key);
+  };
+}
+
+// controllers
+import "reflect-metadata";
+import { Router } from "express";
+/**
+ * Controller - iterate through all the properties of the class's prototype
+ * And check to see if they have any metadata information associated with them
+ * if yes, then it will take that metadata and associate it with express router
+ */
+export const router = Router();
+
+export function controller(routePrefix: string) {
+  return function(target: Function) {
+    for (let key in target.prototype) {
+      const routeHandler = target.prototype[key]; //LoginController.getLogin
+      const path = Reflect.getMetadata("path", target.prototype, key);
+
+      if (path) {
+        router.get(`${routePrefix}${path}`, routeHandler);
+      }
+    }
+  };
+}
+```
+
+### RouteBinding
+
+```ts
+// Avoid Duplication so create a binder to call it for different methods
+function routeBinder(method: string) {
+  return function(path: string) {
+    return (target: any, key: string, desc: PropertyDescriptor): void => {
+      /**
+       * 1st: name of the metadata variable we want to create
+       * 2nd: value of the metadata we have to store
+       * 3rd: target is the target object for which we are
+       * defining metadata in this case maybe a class.
+       * This is because as we saw that every class is stored like a object
+       * and has a prototype object.
+       * 4th: property of that object. if considered class as an object then its
+       * functions are the properties
+       */
+      Reflect.defineMetadata("path", path, target, key);
+      Reflect.defineMetadata("method", method, target, key);
+    };
+  };
+}
+
+export const get = routeBinder("get");
+export const post = routeBinder("post");
+export const put = routeBinder("put");
+export const del = routeBinder("del");
+export const patch = routeBinder("patch");
+```
+
+### Working Process
+
+- For each function/property we are checking for path and method metadata which we defined and then assign the http method for the path and its routeHandler which is the function it is currently looking at.
+
+For Example - CHECK [this](#solution-on-how-to-make-sure-how-the-decorators-are-ran)
+We have to create `GET \login` method. now we have class LoginController in which we have a function getLogin which we have to invoke on calling this route. Since this completely changes the coding style how do we do it? we use decorators and metadata. We create a decorator for get Route. This is something which is executed when the functions are looped through in controller.
+
 ## Packages
 
 - `typescript`
@@ -899,4 +1107,5 @@ Output:
 - `nodemon` - Rerun node anytime changes are detected
 - `concurrently` - Run multiple script at the same time
 - `@types/node` - type definition file for all internal node modules
+- `reflect-metadata` - used for decorators
   
