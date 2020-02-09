@@ -8,6 +8,9 @@ import { MetadataKeys } from "./MetadataKeys";
  * Controller - iterate through all the properties of the class's prototype
  * And check to see if they have any metadata information associated with them
  * if yes, then it will take that metadata and associate it with express router
+ *
+ *
+ * * FOR ANY CONTROLLER TARGET IS CONSTRUCTOR FUNCTION
  */
 export function controller(routePrefix: string) {
   return function(target: Function) {
@@ -32,8 +35,13 @@ export function controller(routePrefix: string) {
         target.prototype,
         key
       );
+
+      const middlewares =
+        Reflect.getMetadata(MetadataKeys.middleware, target.prototype, key) ||
+        [];
+
       if (path) {
-        router[method](`${routePrefix}${path}`, routeHandler);
+        router[method](`${routePrefix}${path}`, ...middlewares, routeHandler);
       }
     }
   };
