@@ -54,6 +54,7 @@
     - [Integrating Typescript with Express Code](#integrating-typescript-with-express-code)
     - [Using Decorators](#using-decorators)
       - [Solution on how to make sure how the decorators are ran](#solution-on-how-to-make-sure-how-the-decorators-are-ran)
+      - [metadata](#metadata)
   - [Decorators](#decorators)
     - [Property Descriptor](#property-descriptor)
     - [Decorator Factory](#decorator-factory)
@@ -780,6 +781,13 @@ function post(routeName:string){
 - Class decorator of '@controller' runs last
 - class decorator reads metadata from each method, adds complete route definitions to router
 
+#### metadata
+
+- Snippets of info that can be tied to a mehod, property, or class definition
+- cna be used from super custom stuff
+- typescript will provide type information as metadata
+- read and written using the reflect-metadata package
+
 ## Decorators
 
 - Function that can be used to modify/change/anything different properties/methods in the class
@@ -940,4 +948,5 @@ Output:
 - `nodemon` - Rerun node anytime changes are detected
 - `concurrently` - Run multiple script at the same time
 - `@types/node` - type definition file for all internal node modules
+- `reflect-metadata` - used for decorators
   
