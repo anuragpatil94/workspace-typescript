@@ -54,7 +54,7 @@
     - [Integrating Typescript with Express Code](#integrating-typescript-with-express-code)
     - [Using Decorators](#using-decorators)
       - [Solution on how to make sure how the decorators are ran](#solution-on-how-to-make-sure-how-the-decorators-are-ran)
-      - [metadata](#metadata)
+      - [Metadata](#metadata)
   - [Decorators](#decorators)
     - [Property Descriptor](#property-descriptor)
     - [Decorator Factory](#decorator-factory)
@@ -781,7 +781,7 @@ function post(routeName:string){
 - Class decorator of '@controller' runs last
 - class decorator reads metadata from each method, adds complete route definitions to router
 
-#### metadata
+#### Metadata
 
 - Snippets of info that can be tied to a mehod, property, or class definition
 - cna be used from super custom stuff
@@ -807,6 +807,39 @@ console.log(Reflect.getMetadata("note", plane, "color"));
  ```
 
 - `METADATA` is another object connected to target
+
+```ts
+@printMetadata
+class Plane {
+  color: string = "red";
+  @markFunction("Hi There! THis is secret")
+  fly(): void {
+    console.log("vrrrrrrrrrrrrrr");
+  }
+}
+// decorator
+function markFunction(secretInfo: string) {
+  return function(target: Plane, key: string) {
+    Reflect.defineMetadata("secret", secretInfo, target, key);
+  };
+}
+const secret = Reflect.getMetadata("secret", Plane.prototype, "fly");
+console.log("Outside :", secret);
+// decorator
+function printMetadata(target: typeof Plane) {
+  for (let key in target.prototype) {
+    const secret = Reflect.getMetadata("secret", target.prototype, key);
+    console.log("print metadata: ", secret);
+  }
+}
+
+OUTPUT:
+{ color: 'red' }
+Hi There!
+Hi There!
+print metadata:  Hi There! THis is secret
+Outside : Hi There! THis is secret
+```
 
 ## Decorators
 
