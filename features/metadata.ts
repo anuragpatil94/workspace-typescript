@@ -18,26 +18,27 @@ console.log(Reflect.getMetadata("note", plane, "color"));
 const note = Reflect.getMetadata("note", plane);
 console.log(note);
 
-@printMetadata
+@controller
 class Plane {
   color: string = "red";
-  @markFunction("Hi There! THis is secret")
+
+  @get("/login")
   fly(): void {
     console.log("vrrrrrrrrrrrrrr");
   }
 }
 // decorator
-function markFunction(secretInfo: string) {
+function get(path: string) {
   return function(target: Plane, key: string) {
-    Reflect.defineMetadata("secret", secretInfo, target, key);
+    Reflect.defineMetadata("path", path, target, key);
   };
 }
-const secret = Reflect.getMetadata("secret", Plane.prototype, "fly");
-console.log("Outside :", secret);
+
 // decorator
-function printMetadata(target: typeof Plane) {
+function controller(target: typeof Plane) {
   for (let key in target.prototype) {
-    const secret = Reflect.getMetadata("secret", target.prototype, key);
-    console.log("print metadata: ", secret);
+    const path = Reflect.getMetadata("path", target.prototype, key);
+    const middleware = Reflect.getMetadata("middleware", target.prototype, key);
+    router.get(path, middleware, target.prototype[key]);
   }
 }
