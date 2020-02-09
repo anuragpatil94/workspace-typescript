@@ -1,5 +1,6 @@
 import "reflect-metadata";
 import { Methods } from "./Methods";
+import { MetadataKeys } from "./MetadataKeys";
 
 // Avoid Duplication so create a binder to call it for different methods
 function routeBinder(method: string) {
@@ -15,8 +16,8 @@ function routeBinder(method: string) {
        * 4th: property of that object. if considered class as an object then its
        * functions are the properties
        */
-      Reflect.defineMetadata("path", path, target, key);
-      Reflect.defineMetadata("method", method, target, key);
+      Reflect.defineMetadata(MetadataKeys.path, path, target, key);
+      Reflect.defineMetadata(MetadataKeys.method, method, target, key);
     };
   };
 }

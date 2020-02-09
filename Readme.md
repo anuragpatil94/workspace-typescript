@@ -63,6 +63,7 @@
       - [Metadata](#metadata)
     - [Metadata for Login](#metadata-for-login)
     - [RouteBinding](#routebinding)
+    - [Working Process](#working-process)
   - [Packages](#packages)
 
 ## Goals
@@ -1089,6 +1090,13 @@ export const put = routeBinder("put");
 export const del = routeBinder("del");
 export const patch = routeBinder("patch");
 ```
+
+### Working Process
+
+- For each function/property we are checking for path and method metadata which we defined and then assign the http method for the path and its routeHandler which is the function it is currently looking at.
+
+For Example - CHECK [this](#solution-on-how-to-make-sure-how-the-decorators-are-ran)
+We have to create `GET \login` method. now we have class LoginController in which we have a function getLogin which we have to invoke on calling this route. Since this completely changes the coding style how do we do it? we use decorators and metadata. We create a decorator for get Route. This is something which is executed when the functions are looped through in controller.
 
 ## Packages
 
