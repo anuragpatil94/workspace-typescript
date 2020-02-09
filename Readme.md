@@ -52,6 +52,8 @@
     - [Overview](#overview)
     - [Dealing with bad typescript](#dealing-with-bad-typescript)
     - [Integrating Typescript with Express Code](#integrating-typescript-with-express-code)
+    - [Using Decorators](#using-decorators)
+      - [Solution on how to make sure how the decorators are ran](#solution-on-how-to-make-sure-how-the-decorators-are-ran)
   - [Decorators](#decorators)
     - [Property Descriptor](#property-descriptor)
     - [Decorator Factory](#decorator-factory)
@@ -738,6 +740,45 @@ Solution 1 - Create your own interface extending the library interface
 1. Hard Way - Put express code into classes + use some advanced features of TS
    1. Advanced Features?
       1. DECORATORS
+
+### Using Decorators
+
+```ts
+Example:
+
+@controller('/auth')          // All the routes will start as /auth/..
+class loginRoutes{
+  @post('/login)              // Route Path Controller
+  @validateBody('email','password')      // Validation
+  @use(requireAuth)                      // Auth
+  postLogin(req:Request, res:Response):void{
+    const { email, password } = req.body;
+    if (email && password && email === "a@b.com" && password === "pass") {
+      req.session = { loggedIn: true };
+      res.redirect("/");
+    } else {
+      res.send("Invalid Email or Password");
+    }
+  }
+}
+
+
+function post(routeName:string){
+  return function (target:any,key: string, desc: PropertyDescriptor){
+    // target[key] is basically postLogin function in class
+    router.post(routeName,target[key])
+  }
+}
+```
+
+#### Solution on how to make sure how the decorators are ran
+
+- Node executes code
+- Class definition rad in - devorators are executed
+- Decorators associate route confiturations info with the methods by using metadata.
+- all methods decorators run
+- Class decorator of '@controller' runs last
+- class decorator reads metadata from each method, adds complete route definitions to router
 
 ## Decorators
 
