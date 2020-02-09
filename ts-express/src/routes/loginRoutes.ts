@@ -1,9 +1,5 @@
 import { Router, Request, Response, NextFunction } from "express";
 
-interface RequestWithBody extends Request {
-  body: { [key: string]: string | undefined };
-}
-
 function requireAuth(req: Request, res: Response, next: NextFunction): void {
   // if user is login and has session
   if (req.session?.loggedIn) {
@@ -36,17 +32,6 @@ router.get("/", (req: Request, res: Response) => {
       <a href="/login">Login</a>
       </div>
     `);
-  }
-});
-
-router.post("/login", (req: RequestWithBody, res: Response) => {
-  const { email, password } = req.body;
-
-  if (email && password && email === "a@b.com" && password === "pass") {
-    req.session = { loggedIn: true };
-    res.redirect("/");
-  } else {
-    res.send("Invalid Email or Password");
   }
 });
 
