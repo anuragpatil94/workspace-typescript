@@ -67,6 +67,7 @@
   - [(Project) React](#project-react)
     - [React-TS Advantages](#react-ts-advantages)
     - [React-TS Disadvantages](#react-ts-disadvantages)
+    - [Handling Props with TS](#handling-props-with-ts)
   - [Packages](#packages)
 
 ## Goals
@@ -1115,6 +1116,21 @@ We have to create `GET \login` method. now we have class LoginController in whic
 - Lot of generics in code
 - Lot of imports
 - tough integration of redux with TS
+
+### Handling Props with TS
+
+```ts
+// All the different props we pass to the component
+interface AppProps {
+  color: string;
+}
+class App extends React.Component<AppProps> {
+  render() {
+    return <div>{this.props.color}</div>;
+  }
+}
+ReactDOM.render(<App color="red" />, document.querySelector("#root"));
+```
 
 ## Packages
 
