@@ -1119,6 +1119,9 @@ We have to create `GET \login` method. now we have class LoginController in whic
 
 ### Handling Props with TS
 
+- since props are kind of variables they need to have a type else TS will give an error.
+- To make sure we know what props are supposed to be received we add an interface.
+
 ```ts
 // All the different props we pass to the component
 interface AppProps {
@@ -1131,6 +1134,9 @@ class App extends React.Component<AppProps> {
 }
 ReactDOM.render(<App color="red" />, document.querySelector("#root"));
 ```
+
+- Error - `Property 'counter' does not exist on type 'Readonly<{}>'`
+- This is because we have to add a new interface defining state.
 
 ## Packages
 
