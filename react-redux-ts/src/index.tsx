@@ -11,6 +11,11 @@ interface AppState {
   counter: number;
 }
 
+// Functional Component
+// const App = (props: AppProps): JSX.Element => {
+//   return <div>{props.color}</div>;
+// };
+
 class App extends React.Component<AppProps, AppState> {
   constructor(props: AppProps) {
     super(props);
