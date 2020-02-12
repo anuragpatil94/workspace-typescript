@@ -9,8 +9,27 @@ interface AppProps {
 }
 
 class _App extends React.Component<AppProps, StoreState> {
+  onButtonClick = (): void => {
+    this.props.fetchTodos();
+  };
+
+  renderList = (): JSX.Element[] => {
+    return this.props.todos.map(todo => {
+      return (
+        <div key={todo.id}>
+          {todo.id} - {todo.title}
+        </div>
+      );
+    });
+  };
+
   render() {
-    return <div>Hi There!</div>;
+    return (
+      <div>
+        <button onClick={this.onButtonClick}>Fetch</button>
+        {this.renderList()}
+      </div>
+    );
   }
 }
 
@@ -18,5 +37,4 @@ const mapStateToProps = ({ todos }: StoreState): { todos: Todo[] } => {
   return { todos };
 };
 
-export const App = connect(mapStateToProps,{fetchTodos})(_App);
-
+export const App = connect(mapStateToProps, { fetchTodos })(_App);
