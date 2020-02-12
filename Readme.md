@@ -64,6 +64,11 @@
     - [Metadata for Login](#metadata-for-login)
     - [RouteBinding](#routebinding)
     - [Working Process](#working-process)
+  - [(Project) React](#project-react)
+    - [React-TS Advantages](#react-ts-advantages)
+    - [React-TS Disadvantages](#react-ts-disadvantages)
+    - [Handling Props with TS](#handling-props-with-ts)
+    - [Tips](#tips)
   - [Packages](#packages)
 
 ## Goals
@@ -114,6 +119,7 @@
 - `tsc --init` -> To create TS Config file.
 - `tsc` -> Once TS Config file is set up we can run `tsc` to build whole src files.
 - `tsc -w` -> If an changes made we can run this command to rebuild but it will only look for changes instead of build whole project again
+- `yarn create react-app <name> --typescript` -> Create a React Project supporting Typescript
 
 ### Run Typescript
 
@@ -1097,6 +1103,46 @@ export const patch = routeBinder("patch");
 
 For Example - CHECK [this](#solution-on-how-to-make-sure-how-the-decorators-are-ran)
 We have to create `GET \login` method. now we have class LoginController in which we have a function getLogin which we have to invoke on calling this route. Since this completely changes the coding style how do we do it? we use decorators and metadata. We create a decorator for get Route. This is something which is executed when the functions are looped through in controller.
+
+## (Project) React
+
+### React-TS Advantages
+
+- Easier to Refactor
+- Better understanding of the types
+
+### React-TS Disadvantages
+
+- Type Definition Files for Redux Libraries are not proper
+- Lot of generics in code
+- Lot of imports
+- tough integration of redux with TS
+
+### Handling Props with TS
+
+- since props are kind of variables they need to have a type else TS will give an error.
+- To make sure we know what props are supposed to be received we add an interface.
+
+```ts
+// All the different props we pass to the component
+interface AppProps {
+  color: string;
+}
+class App extends React.Component<AppProps> {
+  render() {
+    return <div>{this.props.color}</div>;
+  }
+}
+ReactDOM.render(<App color="red" />, document.querySelector("#root"));
+```
+
+- Error - `Property 'counter' does not exist on type 'Readonly<{}>'`
+- This is because we have to add a new interface defining state.
+
+### Tips
+
+- Whenever we define Component we define a interface for its props
+- We also define interface for state if required.
 
 ## Packages
 
