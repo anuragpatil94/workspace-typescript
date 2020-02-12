@@ -68,6 +68,7 @@
     - [React-TS Advantages](#react-ts-advantages)
     - [React-TS Disadvantages](#react-ts-disadvantages)
     - [Handling Props with TS](#handling-props-with-ts)
+    - [Tips](#tips)
   - [Packages](#packages)
 
 ## Goals
@@ -1137,6 +1138,11 @@ ReactDOM.render(<App color="red" />, document.querySelector("#root"));
 
 - Error - `Property 'counter' does not exist on type 'Readonly<{}>'`
 - This is because we have to add a new interface defining state.
+
+### Tips
+
+- Whenever we define Component we define a interface for its props
+- We also define interface for state if required.
 
 ## Packages
 

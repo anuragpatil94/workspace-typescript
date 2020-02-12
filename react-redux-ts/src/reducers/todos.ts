@@ -1,9 +1,6 @@
-import {
-  Todo,
-  ActionTypes,
-  TodoAction
-} from "../actions";
+import { Todo, ActionTypes, TodoAction } from "../actions";
 
+// _TodoAction is the type created in types.ts
 export const todosReducer = (state: Todo[] = [], action: TodoAction) => {
   switch (action.type) {
     case ActionTypes.fetchTodos:
