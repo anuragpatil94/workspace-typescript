@@ -6,6 +6,6 @@
   },
   "dependencies": {
     "@types/googlemaps": "^3.39.2",
-    "axios": "^0.19.2"
+    "axios": "^0.21.1"
   }
 }
